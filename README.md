@@ -54,10 +54,43 @@ Install cert-manager
     --set prometheus.enabled=false \
     --set installCRDs=true
 
-    
+
+  
 # Installation of runners controller
 
 Make sure you have already installed cert-manager before you install.
+
+    kubectl create ns actions
+
+    kubectl create secret generic controller-manager \
+        -n actions \
+        --from-literal=github_app_id=189801 \
+        --from-literal=github_app_installation_id=24883070 \
+        --from-file=github_app_private_key=ghratpk.pem
+
+    helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
+
+    helm repo update
+
+    helm search repo actions
+
+    helm install actions \
+        actions-runner-controller/actions-runner-controller \
+        --namespace actions \
+        --version 0.14.0 \
+        --set syncPeriod=1m
+
+Let's check if the controller is up
+
+    kubectl pods -n actions
+
+    
+
+
+
+
+
+
 
     kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml
 
@@ -67,11 +100,7 @@ Make sure you have already installed cert-manager before you install.
 
     kubectl apply -f https://github.com/actions-runner-controller/actions-runner-controller/releases/download/v0.22.0/actions-runner-controller.yaml
 
-    kubectl create secret generic controller-manager \
-        -n actions-runner-system \
-        --from-literal=github_app_id=${189801} \
-        --from-literal=github_app_installation_id=${24883070} \
-        --from-file=github_app_private_key=${ghratpk.pem}
+    
 
     kubectl create secret generic controller-manager \
         -n actions-runner-system \
