@@ -85,10 +85,9 @@ Let's check if the controller is up
 
     kubectl pods -n actions
 
-Use runner.yaml
+Deploy k8s/horizontal-runner-autoscaler.yaml
 
-    
-
+    kubectl apply -f k8s/horizontal-runner-autoscaler.yaml
 
 
 
