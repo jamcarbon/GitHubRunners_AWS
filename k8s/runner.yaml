@@ -4,5 +4,5 @@ kind: Runner
 metadata:
   name: k8s-runner1
 spec:
-  repository: https://github.com/jamcarbon/test-rust
+  repository: jamcarbon/test-rust
   env: []
