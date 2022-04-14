@@ -5,11 +5,11 @@ metadata:
   namespace: actions
 spec:
   scaleTargetRef:
-    name: k8s-runners
+    name: k8s-runners3
   scaleDownDelaySecondsAfterScaleOut: 300
   minReplicas: 1
-  maxReplicas: 10
+  maxReplicas: 100
   metrics:
   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
     repositoryNames:
-    - antonputra/lesson-089
+    - jamcarbon/test-rust
