@@ -87,11 +87,21 @@ Let's check if the controller is up
 
 Deploy runners
 
-    kubectl apply -f k8s/runner-deployment.yaml
+    kubectl apply -f k8s/runner.yaml
+
+    # kubectl apply -f k8s/runner-deployment.yaml
 
     kubectl apply -f k8s/horizontal-runner-autoscaler.yaml
 
     kubectl get pods -n actions
+
+    kubectl logs -f k8s-runner1 -c runner -n actions
+
+    
+
+
+
+
 
 
 
