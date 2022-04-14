@@ -1,8 +1,10 @@
 # runner.yaml
 apiVersion: actions.summerwind.dev/v1alpha1
-kind: Runner
+kind: RunnerDeployment
 metadata:
   name: k8s-runner1
 spec:
-  repository: jamcarbon/test-rust
-  env: []
+  template:
+      spec:
+        repository: mumoshu/actions-runner-controller-ci
+        env: []
