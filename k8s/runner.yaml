@@ -6,5 +6,5 @@ metadata:
 spec:
   template:
       spec:
-        repository: mumoshu/actions-runner-controller-ci
+        repository: jamcarbon/test-rust
         env: []
