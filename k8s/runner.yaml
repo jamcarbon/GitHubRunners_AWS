@@ -1,0 +1,8 @@
+# runner.yaml
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: Runner
+metadata:
+  name: runner1
+spec:
+  repository: https://github.com/jamcarbon/test-rust
+  env: []
