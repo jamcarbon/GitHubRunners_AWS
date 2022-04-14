@@ -2,12 +2,12 @@
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
-  name: k8s-runners
+  name: k8s-runner2
   namespace: actions
 spec:
   template:
     spec:
-      repository: antonputra/lesson-089
+      repository: jamcarbon/test-rust
       labels:
         - my-custom-runner
       env: []
