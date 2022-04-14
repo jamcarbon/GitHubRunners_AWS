@@ -12,6 +12,7 @@ Clone the repository
     sudo apt install git
     
     git clone https://github.com/jamcarbon/GitHubRunners_AWS
+    # git fetch https://github.com/jamcarbon/GitHubRunners_AWS
 
     cd GitHubRunners_AWS
 
@@ -84,7 +85,7 @@ Let's check if the controller is up
 
     kubectl pods -n actions
 
-    
+
 
 
 
