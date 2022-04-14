@@ -1,4 +1,4 @@
-Auto Scale Github Action Runners using Kubernetes, Terraform, and docker
+# Auto Scale Github Action Runners using Kubernetes, Terraform, and docker
 
 1. Create the infrastructure, we are going to create 2 VPC, ,igw, 4 subnets, nat, routes, eks cluster with IAM roles and a managed instance group using Terraform.
 
@@ -12,7 +12,7 @@ Clone the repository
     sudo apt install git
     
     git clone https://github.com/jamcarbon/GitHubRunners_AWS
-    # git fetch https://github.com/jamcarbon/GitHubRunners_AWS
+    # git pull https://github.com/jamcarbon/GitHubRunners_AWS main
 
     cd GitHubRunners_AWS
 
@@ -84,6 +84,10 @@ Make sure you have already installed cert-manager before you install.
 Let's check if the controller is up
 
     kubectl pods -n actions
+
+Use runner.yaml
+
+    
 
 
 
