@@ -22,7 +22,7 @@ spec:
         - name: tmp
           emptyDir:
             medium: Memory
-      emphemeral: true
+      
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler
