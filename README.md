@@ -99,7 +99,7 @@ Validate .yaml
 
     kubectl apply -f k8s/runner-deployment.yaml
 
-    kubectl apply -f k8s/runner-hzsc.yaml -n actions
+    kubectl apply -f k8s/runner-hzsc.yaml
 
     kubectl get pods -n actions
 
