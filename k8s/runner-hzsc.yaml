@@ -27,6 +27,6 @@ spec:
     scaleUpFactor: '2'
     scaleDownFactor: '0.5'
   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
-    repositoryNames:
-    - jamcarbon/test-rust
-    env: []
+      repositoryNames:
+      - jamcarbon/test-rust
+    
