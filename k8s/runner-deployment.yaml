@@ -34,6 +34,7 @@ spec:
     scaleDownThreshold: '0.40'
     scaleUpFactor: '2'
     scaleDownFactor: '0.5'
-  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
     repositoryNames:
     - jamcarbon/test-rust
+
+# - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
