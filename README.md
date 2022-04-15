@@ -23,6 +23,10 @@ Clone the repository
 
     cd terraform
 
+Validate the templates    
+
+    terraform validate
+
     terraform init
 
     terraform apply
@@ -80,7 +84,7 @@ Make sure you have already installed cert-manager before you install.
     helm install runner \
         actions-runner-controller/actions-runner-controller \
         --namespace actions \
-        --version 0.17.2 \
+        --version 0.14.0 \
         --set syncPeriod=1m
 
 Let's check if the controller is up
