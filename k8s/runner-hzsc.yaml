@@ -1,0 +1,30 @@
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: example-runner-deployment-autoscaler
+spec:
+  # Runners in the targeted RunnerDeployment won't be scaled down
+  # 4 minutes delay
+  scaleDownDelaySecondsAfterScaleOut: 240
+  scaleTargetRef:
+    name: runner-deployment1
+    # Uncomment the below in case the target is not RunnerDeployment but RunnerSet
+    #kind: RunnerSet
+  minReplicas: 0
+  maxReplicas: 50
+
+  scaleUpTriggers:
+    - githubEvent:
+      push:
+    amount: 1
+    duration: "1m"
+
+  metrics:
+  - type: PercentageRunnersBusy
+    scaleUpThreshold: '0.95'
+    scaleDownThreshold: '0.40'
+    scaleUpFactor: '2'
+    scaleDownFactor: '0.5'
+  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+    repositoryNames:
+    - jamcarbon/test-rust
