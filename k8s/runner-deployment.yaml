@@ -6,23 +6,6 @@ spec:
   template:
     spec:
       repository: jamcarbon/test-rust
-      dockerVolumeMounts:
-        - mountPath: /var/lib/docker
-          name: docker
-      volumeMounts:
-        - mountPath: /tmp
-          name: tmp
-      volumes:
-        - name: docker
-          emptyDir:
-            medium: Memory
-        - name: work # this volume gets automatically used up for the workdir
-          emptyDir:
-            medium: Memory
-        - name: tmp
-          emptyDir:
-            medium: Memory
-      
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler

@@ -1,7 +1,7 @@
 # Resource: aws_iam_role
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-resource "aws_iam_role" "runners" {
-  name = "eks-cluster-runners"
+resource "aws_iam_role" "demo" {
+  name = "eks-cluster-demo"
 
   assume_role_policy = <<POLICY
 {
@@ -21,16 +21,16 @@ POLICY
 
 # Resource: aws_iam_role_policy_attachment
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
-resource "aws_iam_role_policy_attachment" "runners-AmazonEKSClusterPolicy" {
+resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.runners.name
+  role       = aws_iam_role.demo.name
 }
 
 # Resource: aws_eks_cluster
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster
-resource "aws_eks_cluster" "runners" {
-  name     = "runners"
-  role_arn = aws_iam_role.runners.arn
+resource "aws_eks_cluster" "demo" {
+  name     = "demo"
+  role_arn = aws_iam_role.demo.arn
 
   vpc_config {
     subnet_ids = [
@@ -43,5 +43,5 @@ resource "aws_eks_cluster" "runners" {
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
   # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
-  depends_on = [aws_iam_role_policy_attachment.runners-AmazonEKSClusterPolicy]
+  depends_on = [aws_iam_role_policy_attachment.demo-AmazonEKSClusterPolicy]
 }
