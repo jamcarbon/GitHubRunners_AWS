@@ -40,13 +40,15 @@ resource "aws_eks_node_group" "general" {
     aws_subnet.private-us-east-1b.id
   ]
 
+  ami_type = "AL2_ARM_64"
+
   capacity_type  = "ON_DEMAND"
-  instance_types = ["c6gd.medium"]
+  instance_types = ["c6g.medium"]
 
   scaling_config {
-    desired_size = 2
-    max_size     = 5
-    min_size     = 1
+    desired_size = 0
+    max_size     = 50
+    min_size     = 0
   }
 
   update_config {
