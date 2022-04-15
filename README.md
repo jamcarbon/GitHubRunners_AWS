@@ -127,7 +127,7 @@ Validate .yaml
 
     REPLACE "v0.22.0" with the version you wish to deploy
 
-    kubectl apply -f https://github.com/actions-runner-controller/actions-runner-controller/releases/download/v0.22.0/actions-runner-controller.yaml
+    kubectl apply -f https://github.com/actions-runner-controller/actions-runner-controller/releases/download/v0.22.3/actions-runner-controller.yaml
 
     
 
