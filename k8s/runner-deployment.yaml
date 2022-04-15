@@ -6,6 +6,23 @@ spec:
   template:
     spec:
       repository: jamcarbon/test-rust
+      dockerVolumeMounts:
+        - mountPath: /var/lib/docker
+          name: docker
+      volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+      volumes:
+        - name: docker
+          emptyDir:
+            medium: Memory
+        - name: work # this volume gets automatically used up for the workdir
+          emptyDir:
+            medium: Memory
+        - name: tmp
+          emptyDir:
+            medium: Memory
+      emphemeral: true
 ---
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: HorizontalRunnerAutoscaler
@@ -13,8 +30,8 @@ metadata:
   name: example-runner-deployment-autoscaler
 spec:
   # Runners in the targeted RunnerDeployment won't be scaled down
-  # 2 minutes delay
-  scaleDownDelaySecondsAfterScaleOut: 120
+  # 4 minutes delay
+  scaleDownDelaySecondsAfterScaleOut: 240
   scaleTargetRef:
     name: runner-deployment1
     # Uncomment the below in case the target is not RunnerDeployment but RunnerSet
@@ -30,8 +47,8 @@ spec:
 
   metrics:
   - type: PercentageRunnersBusy
-    scaleUpThreshold: '0.90'
-    scaleDownThreshold: '0.25'
+    scaleUpThreshold: '0.95'
+    scaleDownThreshold: '0.40'
     scaleUpFactor: '2'
     scaleDownFactor: '0.5'
   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
