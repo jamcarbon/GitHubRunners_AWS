@@ -39,11 +39,13 @@ Install cert-manager
 
     sudo snap install helm --classic
 
-    helm repo jetstack https://charts.jetstack.io
+    helm repo add jetstack https://charts.jetstack.io
 
     helm repo update
 
     helm search repo cert-manager
+
+Watch current pods
 
     watch kubectl get pods -A
 
@@ -75,7 +77,7 @@ Make sure you have already installed cert-manager before you install.
 
     helm search repo actions
 
-    helm install actions \
+    helm install runner \
         actions-runner-controller/actions-runner-controller \
         --namespace actions \
         --version 0.14.0 \
@@ -83,9 +85,9 @@ Make sure you have already installed cert-manager before you install.
 
 Let's check if the controller is up
 
-    helm search repo actions
+    kubectl get pods -n actions
 
-Deploy runners
+# Deploy runners
 
 Validate .yaml
 
@@ -93,9 +95,11 @@ Validate .yaml
 
     kubectl apply -f k8s/runner-deployment.yaml -n actions
 
+    kubectl apply -f k8s/runner-hzsc.yaml -n actions
+
     kubectl get pods -n actions
 
-    kubectl logs -f k8s-runner1 -c runner -n actions
+    kubectl logs -f runner-deployment1 -c runner -n actions
 
     # kubectl delete all --all
 

@@ -1,8 +1,11 @@
 apiVersion: actions.summerwind.dev/v1alpha1
 kind: RunnerDeployment
 metadata:
-  name: runner-deployment1
+  name: k8s-runners-deployment1
 spec:
   template:
     spec:
       repository: jamcarbon/test-rust
+      labels:
+        - Auto-scalable runners 
+      env: []
