@@ -103,7 +103,7 @@ Validate .yaml
 
     kubectl get pods -n actions
 
-    kubectl logs -f runner-deployment1 -c runner -n actions
+    kubectl logs -f runner-hzsc-c runner -n actions runner
 
     # kubectl delete all --all
 
