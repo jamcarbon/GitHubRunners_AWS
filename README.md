@@ -83,15 +83,11 @@ Make sure you have already installed cert-manager before you install.
 
 Let's check if the controller is up
 
-    kubectl pods -n actions
+    kubectl get pods -n actions
 
 Deploy runners
 
-    # kubectl apply -f k8s/runner.yaml
-
-    kubectl apply -f k8s/runner-deployment.yaml
-
-    kubectl apply -f k8s/horizontal-runner-autoscaler.yaml
+    kubectl apply -f k8s/runner-deployment.yaml -n actions
 
     kubectl get pods -n actions
 
