@@ -1,5 +1,5 @@
 ---
-apiVersion: actions.summerwind.dev/v1alpha1
+apiVersion: apps/v1
 kind: RunnerDeployment
 metadata:
   name: k8s-runners-deployment1
