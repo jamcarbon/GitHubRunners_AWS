@@ -101,9 +101,11 @@ Validate .yaml
 
     kubectl apply -f k8s/runner-hzsc.yaml --validate=false
 
+    kubectl apply -f k8s/horizontal-runner-autoscaler.yaml
+
     kubectl get pods -n actions
 
-    kubectl logs -f runner-hzsc -c runner -n actions runner
+    kubectl logs -f k8s-runners-5lrhm-t95x7 -c runner -n actions runner
 
     # kubectl delete all --all
 
