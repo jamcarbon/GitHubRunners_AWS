@@ -43,7 +43,7 @@ resource "aws_eks_node_group" "general" {
   ami_type = "AL2_ARM_64"
 
   capacity_type  = "ON_DEMAND"
-  instance_types = ["t2.medium"]
+  instance_types = ["m6g.large"]
 
   scaling_config {
     desired_size = 1
