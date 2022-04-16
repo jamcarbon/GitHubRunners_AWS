@@ -15,4 +15,4 @@ spec:
     repositoryNames:
     - jamcarbon/test-rust
     labels:
-        - Auto-scalable runners
+      - Auto-scalable runners
