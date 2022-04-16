@@ -8,7 +8,7 @@ spec:
   scaleTargetRef:
     name: k8s-runners
   scaleDownDelaySecondsAfterScaleOut: 150
-  minReplicas: 1
+  minReplicas: 0
   maxReplicas: 50
   metrics:
   - type: PercentageRunnersBusy

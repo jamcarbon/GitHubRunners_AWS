@@ -53,11 +53,13 @@ Watch current pods
 
     watch kubectl get pods -A
 
+Install cert-manager
+
     helm install \
     cert-manager jetstack/cert-manager \
     --namespace cert-manager \
     --create-namespace \
-    --version v1.6.0 \
+    --version v1.8.0 \
     --set prometheus.enabled=false \
     --set installCRDs=true
 
@@ -74,6 +76,8 @@ Make sure you have already installed cert-manager before you install.
         --from-literal=github_app_id=189801 \
         --from-literal=github_app_installation_id=24883070 \
         --from-file=github_app_private_key=ghratpk.pem
+
+    watch kubectl get pods --all-namespaces
 
     helm repo add actions-runner-controller https://actions-runner-controller.github.io/actions-runner-controller
 
