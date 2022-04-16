@@ -8,6 +8,4 @@ spec:
   template:
     spec:
       repository: jamcarbon/test-rust
-      labels:
-        - Auto-scalable runners
       env: []
