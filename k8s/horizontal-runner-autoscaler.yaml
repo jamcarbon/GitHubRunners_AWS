@@ -14,3 +14,5 @@ spec:
   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
     repositoryNames:
     - jamcarbon/test-rust
+    labels:
+        - Auto-scalable runners
