@@ -7,12 +7,15 @@ metadata:
 spec:
   scaleTargetRef:
     name: k8s-runners
-  scaleDownDelaySecondsAfterScaleOut: 300
+  scaleDownDelaySecondsAfterScaleOut: 150
   minReplicas: 1
   maxReplicas: 50
   metrics:
+  - type: PercentageRunnersBusy
+    scaleUpThreshold: '0.95'    # The percentage of busy runners at which the number of desired runners are re-evaluated to scale up
+    scaleDownThreshold: '0.5'   # The percentage of busy runners at which the number of desired runners are re-evaluated to scale down
+    scaleUpAdjustment: 1       # The scale up runner count added to desired count
+    scaleDownAdjustment: 4      # The scale down runner count subtracted from the desired count
   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
     repositoryNames:
     - jamcarbon/test-rust
-    labels:
-      - Auto-scalable runners

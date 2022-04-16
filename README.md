@@ -106,7 +106,7 @@ Validate .yaml
 
     kubectl get pods -n actions
 
-    kubectl logs -f k8s-runners-5lrhm-t95x7 -c runner -n actions runner
+    kubectl logs -f k8s-runners -c runner -n actions runner
 
     # kubectl delete all --all
 
@@ -141,3 +141,6 @@ Validate .yaml
     kubectl create secret generic controller-manager \
         -n actions-runner-system \
         --from-literal=github_token=${GITHUB_TOKEN}
+
+
+kubectl exec --stdin --tty k8s-runners-lz6p5-6kqdj -- /bin/bash
