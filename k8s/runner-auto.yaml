@@ -1,0 +1,21 @@
+---
+apiVersion: actions.summerwind.dev/v1alpha1
+kind: HorizontalRunnerAutoscaler
+metadata:
+  name: k8s-runners-autoscaler
+  namespace: actions
+spec:
+  scaleTargetRef:
+    name: k8s-runners
+  scaleDownDelaySecondsAfterScaleOut: 300
+  minReplicas: 0
+  maxReplicas: 50
+  scaleUpTriggers:
+  - githubEvent:
+      push:
+    amount: 1
+    duration: "1m"
+  metrics:
+  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+    repositoryNames:
+    - jamcarbon/test-rust
