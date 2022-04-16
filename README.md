@@ -102,6 +102,7 @@ Validate .yaml
     kubectl apply -f k8s/runner-hzsc.yaml --validate=false
 
     kubectl apply -f k8s/horizontal-runner-autoscaler.yaml
+    kubectl apply -f k8s/runner-auto.yaml
 
     kubectl get pods -n actions
 
