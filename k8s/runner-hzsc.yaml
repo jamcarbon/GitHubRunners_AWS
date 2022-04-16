@@ -1,5 +1,6 @@
 ---
-apiVersion: actions.summerwind.dev/v1alpha1
+apiVersion: actions.summerwind.dev/v1alpha 
+  --validate=false
 kind: HorizontalRunnerAutoscaler
 metadata:
   name: example-runner-deployment-autoscaler
