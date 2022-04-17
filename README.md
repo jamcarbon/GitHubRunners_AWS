@@ -29,6 +29,8 @@ Validate the templates
 
     terraform init
 
+    # terraform plan
+
     terraform apply
 
     # terraform apply -destroy
@@ -114,6 +116,8 @@ Validate .yaml
 
     # kubectl delete all --all
 
+
+    # kubectl -n kube-system logs -f deployment.apps/cluster-autoscaler
     
 
 
