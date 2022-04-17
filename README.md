@@ -25,9 +25,9 @@ Clone the repository
 
 Validate the templates    
 
-    terraform validate
-
     terraform init
+
+    # terraform validate
 
     # terraform plan
 
@@ -35,7 +35,7 @@ Validate the templates
 
     # terraform apply -destroy
 
-    aws eks --region us-east-1 update-kubeconfig --name demo
+    aws eks --region us-east-1 update-kubeconfig --name Runners
 
 Test connection
 
@@ -113,6 +113,8 @@ Validate .yaml
     kubectl get pods -n actions
 
     kubectl logs -f k8s-runners -c runner -n actions runner
+
+    kubectl logs -f runner-actions-runner-controller-5997c655ff-x8mln -n actions manager
 
     # kubectl delete all --all
 
