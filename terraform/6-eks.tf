@@ -29,7 +29,7 @@ resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
 # Resource: aws_eks_cluster
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster
 resource "aws_eks_cluster" "demo" {
-  name     = "demo"
+  name     = "Runners"
   role_arn = aws_iam_role.demo.arn
 
   vpc_config {
