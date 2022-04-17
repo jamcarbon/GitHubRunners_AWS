@@ -9,7 +9,7 @@ spec:
     name: k8s-runners
   scaleDownDelaySecondsAfterScaleOut: 150
   minReplicas: 1
-  maxReplicas: 50
+  maxReplicas: 100
   metrics:
   - type: PercentageRunnersBusy
     scaleUpThreshold: '0.95'    # The percentage of busy runners at which the number of desired runners are re-evaluated to scale up
