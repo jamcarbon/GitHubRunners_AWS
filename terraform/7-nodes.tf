@@ -30,9 +30,9 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 
 # Resource: aws_eks_node_group
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group
-resource "aws_eks_node_group" "general" {
-  cluster_name    = aws_eks_cluster.demo.name
-  node_group_name = "general"
+resource "aws_eks_node_group" "node.runners" {
+  cluster_name    = aws_eks_cluster.runners
+  node_group_name = "node.runners"
   node_role_arn   = aws_iam_role.nodes.arn
 
   subnet_ids = [

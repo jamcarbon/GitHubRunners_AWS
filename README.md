@@ -27,13 +27,23 @@ Validate the templates
 
     terraform init
 
-    # terraform validate
+You can validate the terraform files by running
 
-    # terraform plan
+    terraform validate
+
+You can check the terraform plan by running
+
+    terraform plan
+
+To apply all the infrastructure run    
 
     terraform apply
 
-    # terraform apply -destroy
+To destroy all the infrastucture created    
+
+    terraform apply -destroy
+
+# Register Kubernetets to use AWS infrastructure    
 
     aws eks --region us-east-1 update-kubeconfig --name Runners
 
@@ -55,6 +65,8 @@ Watch current pods
 
     watch kubectl get pods -A
 
+Open a new command prompt    
+
 Install cert-manager
 
     helm install \
@@ -65,7 +77,6 @@ Install cert-manager
     --set prometheus.enabled=false \
     --set installCRDs=true
 
-
   
 # Installation of runners controller
 
@@ -73,11 +84,15 @@ Make sure you have already installed cert-manager before you install.
 
     kubectl create ns actions
 
+Go to your GitHub account and create an app, please follow the instructions on the wesite below to create an GitHub app and modify the values on the snip after this:
+
+    https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app
+
     kubectl create secret generic controller-manager \
         -n actions \
-        --from-literal=github_app_id=189801 \
-        --from-literal=github_app_installation_id=24883070 \
-        --from-file=github_app_private_key=ghratpk.pem
+        --from-literal=github_app_id=[your_app_id] \
+        --from-literal=github_app_installation_id=[installation_id] \
+        --from-file=github_app_private_key=[your_key.pem]
 
     watch kubectl get pods --all-namespaces
 
@@ -103,14 +118,21 @@ Validate .yaml
 
     kubeval k8s/runner-deployment.yaml
 
+Apply the deployment    
+
     kubectl apply -f k8s/runner-deployment.yaml
 
-    kubectl apply -f k8s/runner-hzsc.yaml --validate=false
+Apply the horizontal autoscaler    
 
     kubectl apply -f k8s/horizontal-runner-autoscaler.yaml
-    kubectl apply -f k8s/runner-auto.yaml
+
+Check the generated pods 
 
     kubectl get pods -n actions
+
+# Deploy changes on the repository     
+
+Check the logs of the desired instances
 
     kubectl logs -f k8s-runners -c runner -n actions runner
 
