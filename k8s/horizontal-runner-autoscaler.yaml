@@ -8,14 +8,14 @@ spec:
   scaleTargetRef:
     name: k8s-runners
   scaleDownDelaySecondsAfterScaleOut: 150
-  minReplicas: 1
+  minReplicas: 1      # Minimum of 1 replica is required to kickstart the load when required
   maxReplicas: 100
   metrics:
   - type: PercentageRunnersBusy
     scaleUpThreshold: '0.95'    # The percentage of busy runners at which the number of desired runners are re-evaluated to scale up
-    scaleDownThreshold: '0.5'   # The percentage of busy runners at which the number of desired runners are re-evaluated to scale down
+    scaleDownThreshold: '0.15'   # The percentage of busy runners at which the number of desired runners are re-evaluated to scale down
     scaleUpAdjustment: 1       # The scale up runner count added to desired count
-    scaleDownAdjustment: 4      # The scale down runner count subtracted from the desired count
-  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns
+    scaleDownAdjustment: 3       # The scale down runner count subtracted from the desired count
+  - type: TotalNumberOfQueuedAndInProgressWorkflowRuns # Autoscale using queued workflow runs
     repositoryNames:
     - jamcarbon/test-rust
