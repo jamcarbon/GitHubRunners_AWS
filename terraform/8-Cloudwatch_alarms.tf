@@ -1,6 +1,7 @@
-resource "aws_placement_group" "test" {
-  name     = "test"
-  strategy = "cluster"
+resource "aws_launch_template" "ltm" {
+  name_prefix   = "ltm"
+  image_id      = "ami-0e472ba40eb589f49"
+  instance_type = "t4g.medium"
 }
 
 resource "aws_autoscaling_group" "autoscalegroup" {
@@ -11,8 +12,12 @@ resource "aws_autoscaling_group" "autoscalegroup" {
   health_check_type         = "EC2"
   desired_capacity     = 1
   default_cooldown     = 120
-  placement_group           = aws_placement_group.test.id
   vpc_zone_identifier  = [aws_subnet.private-us-east-1a.id, aws_subnet.private-us-east-1b.id]
+
+launch_template {
+    id      = aws_launch_template.ltm.id
+    version = "$Latest"
+  }
 
   tag {
     key                 = "Name"
@@ -44,5 +49,5 @@ resource "aws_cloudwatch_metric_alarm" "CPUauto95" {
   }
 
   alarm_description = "Autoscale when more than 95% CPU"
-  alarm_actions     = [aws_autoscaling_policy.95.autoscalepolicy.arn]
+  alarm_actions     = [aws_autoscaling_policy.asp.arn]
 }
