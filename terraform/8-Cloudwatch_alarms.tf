@@ -17,6 +17,7 @@ resource "aws_autoscaling_group" "autoscalegroup" {
   tag {
     key                 = "Name"
     value               = "AutoscaleGroup"
+    propagate_at_launch = true
   }
 }
 
