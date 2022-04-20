@@ -1,3 +1,8 @@
+resource "aws_placement_group" "test" {
+  name     = "test"
+  strategy = "cluster"
+}
+
 resource "aws_autoscaling_group" "autoscalegroup" {
   name                 = "autoscalegroup"
   min_size             = 1
@@ -6,6 +11,7 @@ resource "aws_autoscaling_group" "autoscalegroup" {
   health_check_type         = "EC2"
   desired_capacity     = 1
   default_cooldown     = 120
+  placement_group           = aws_placement_group.test.id
   vpc_zone_identifier  = [aws_subnet.private-us-east-1a.id, aws_subnet.private-us-east-1b.id]
 
   tag {
