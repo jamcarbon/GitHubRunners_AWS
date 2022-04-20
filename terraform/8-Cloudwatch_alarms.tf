@@ -25,7 +25,7 @@ resource "aws_autoscaling_policy" "asp" {
   autoscaling_group_name = aws_autoscaling_group.autoscalegroup.name
 }
 
-resource "aws_cloudwatch_metric_alarm" "95" {
+resource "aws_cloudwatch_metric_alarm" "CPUauto95" {
   alarm_name          = "CPUautoscale95"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = "2"
