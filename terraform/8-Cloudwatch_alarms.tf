@@ -8,8 +8,6 @@ resource "aws_autoscaling_group" "autoscalegroup" {
   default_cooldown     = 120
   vpc_zone_identifier  = [aws_subnet.private-us-east-1a.id, aws_subnet.private-us-east-1b.id]
 
-  role_arn                = aws_iam_role.nodes.arn
-
   tag {
     key                 = "Name"
     value               = "AutoscaleGroup"
