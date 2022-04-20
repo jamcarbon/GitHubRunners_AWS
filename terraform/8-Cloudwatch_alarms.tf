@@ -1,6 +1,6 @@
 resource "aws_launch_template" "ltm" {
   name_prefix   = "ltm"
-  image_id      = "ami-0e472ba40eb589f49"
+  image_id      = "ami-036d82cfd2046804f"
   instance_type = "t4g.medium"
 }
 
