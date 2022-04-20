@@ -7,7 +7,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: k8s-runners
-  scaleDownDelaySecondsAfterScaleOut: 150
+  scaleDownDelaySecondsAfterScaleOut: 3600
   minReplicas: 1      # Minimum of 1 replica is required to kickstart the load when required
   maxReplicas: 100
   metrics:

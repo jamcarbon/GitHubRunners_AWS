@@ -1,6 +1,6 @@
 # Auto Scale Github Action Runners using Kubernetes, Terraform, and docker
 
-1. Create the infrastructure, we are going to create 2 VPC, ,igw, 4 subnets, nat, routes, eks cluster with IAM roles and a managed instance group using Terraform.
+Create the infrastructure, we are going to create 2 VPC, ,internet gate way, 4 subnets, nat, routes, eks cluster with IAM roles and a managed instance group using Terraform.
 
 Configure AWS (on your local pc)
 
@@ -43,6 +43,7 @@ To destroy all the infrastucture created
 
     terraform apply -destroy
 
+
 # Register Kubernetets to use AWS infrastructure    
 
     aws eks --region us-east-1 update-kubeconfig --name Runners
@@ -81,6 +82,8 @@ Install cert-manager
 # Installation of runners controller
 
 Make sure you have already installed cert-manager before you install.
+
+Create namespace actions
 
     kubectl create ns actions
 
