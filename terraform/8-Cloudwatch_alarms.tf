@@ -22,7 +22,7 @@ resource "aws_autoscaling_policy" "asp" {
   scaling_adjustment     = 2
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.autoscalegroup
+  autoscaling_group_name = aws_autoscaling_group.autoscalegroup.name
 }
 
 resource "aws_cloudwatch_metric_alarm" "95" {
@@ -36,9 +36,9 @@ resource "aws_cloudwatch_metric_alarm" "95" {
   threshold           = "95"
 
   dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.autoscalegroup
+    AutoScalingGroupName = aws_autoscaling_group.autoscalegroup.name
   }
 
   alarm_description = "Autoscale when more than 95% CPU"
-  alarm_actions     = [aws_autoscaling_policy.95.autoscalepolicy]
+  alarm_actions     = [aws_autoscaling_policy.95.autoscalepolicy.arn]
 }
