@@ -9,37 +9,4 @@ spec:
     spec:
       repository: jamcarbon/test-rust
       env:
-      - name: runnerpods
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
-      dockerVolumeMounts:
-      - mountPath: /var/lib/docker
-        name: docker
-        subPathExpr: $(runnerpods)-docker
-      - mountPath: /runner/_work
-        name: work
-        subPathExpr: $(runnerpods)-work
-      volumeMounts:
-      - mountPath: /runner/_work
-        name: work
-        subPathExpr: $(runnerpods)-work
-      - mountPath: /tmp
-        name: tmp
-        subPathExpr: $(runnerpods)-tmp
-      dockerEnv:
-      - name: runnerpods
-        valueFrom:
-          fieldRef:
-            fieldPath: metadata.name
-      volumes:
-      - hostPath:
-          path: /mnt/disks/ssd0
-        name: docker
-      - hostPath:
-          path: /mnt/disks/ssd0
-        name: work
-      - hostPath:
-          path: /mnt/disks/ssd0
-        name: tmp
-    emphemeral: true # VERY important. otherwise data inside the workdir and /tmp is not cleared between builds
+        []
