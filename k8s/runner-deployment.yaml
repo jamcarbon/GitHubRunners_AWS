@@ -34,13 +34,13 @@ spec:
             fieldPath: metadata.name
       volumes:
       - hostPath:
-          path: /dev/xvda
+          path: /mnt/disks/ssd0
         name: docker
       - hostPath:
-          path: /dev/xvda
+          path: /mnt/disks/ssd0
         name: work
       - hostPath:
-          path: /dev/xvda
+          path: /mnt/disks/ssd0
         name: tmp
     emphemeral: true # VERY important. otherwise data inside the workdir and /tmp is not cleared between builds
     
