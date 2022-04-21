@@ -43,4 +43,3 @@ spec:
           path: /mnt/disks/ssd0
         name: tmp
     emphemeral: true # VERY important. otherwise data inside the workdir and /tmp is not cleared between builds
-    

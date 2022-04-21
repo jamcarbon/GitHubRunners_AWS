@@ -39,7 +39,7 @@ resource "aws_cloudwatch_metric_alarm" "CPUauto95" {
 resource "aws_cloudwatch_metric_alarm" "CPUauto15" {
   alarm_name          = "CPUautoscale15"
   comparison_operator = "LessThanThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
   period              = "1800"
