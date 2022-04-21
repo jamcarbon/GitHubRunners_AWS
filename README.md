@@ -133,13 +133,13 @@ Check the generated pods
 
     kubectl get pods -n actions
 
-# Deploy changes on the repository     
+# Commit changes on the repository that the runners are configured to run
 
 Check the logs of the desired instances
 
     kubectl logs -f k8s-runners -c runner -n actions runner
 
-    kubectl logs -f runner-actions-runner-controller-5997c655ff-x8mln -n actions manager
+    kubectl logs -f runner-actions-runner-controller-5997c655ff-6gngh -n actions manager
 
     # kubectl delete all --all
 

@@ -1,25 +1,55 @@
-resource "aws_autoscaling_policy" "bat" {
-  name                   = "foobar3-terraform-test"
-  scaling_adjustment     = 2
+# Resource: aws_autoscaling_policy
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy
+resource "aws_autoscaling_policy" "upCPU95" {
+  name                   = "UpscaleCPU95"
+  scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.bar.name
+  cooldown               = 240
+  autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
 }
 
-resource "aws_cloudwatch_metric_alarm" "bat" {
-  alarm_name          = "terraform-test-foobar5"
+resource "aws_autoscaling_policy" "downCPU15" {
+  name                   = "DownscaleCPU15"
+  scaling_adjustment     = -2
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 3000
+  autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
+}
+
+# Resource: aws_cloudwatch_metric_alarm
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm
+resource "aws_cloudwatch_metric_alarm" "CPUauto95" {
+  alarm_name          = "CPUautoscale95"
   comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = "1"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "120"
+  statistic           = "Average"
+  threshold           = "95"
+
+  dimensions = {
+    AutoScalingGroupName = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
+  }
+
+  alarm_description = "Autoscale when more than 95% CPU"
+  alarm_actions     = [aws_autoscaling_policy.upCPU95.arn]
+}
+
+resource "aws_cloudwatch_metric_alarm" "CPUauto15" {
+  alarm_name          = "CPUautoscale15"
+  comparison_operator = "LessThanThreshold"
   evaluation_periods  = "2"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "60"
+  period              = "1800"
   statistic           = "Average"
-  threshold           = "80"
+  threshold           = "15"
 
   dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.bar.name
+    AutoScalingGroupName = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
   }
 
-  alarm_description = "This metric monitors ec2 cpu utilization"
-  alarm_actions     = [aws_autoscaling_policy.bat.arn]
+  alarm_description = "Autoscale when more than 95% CPU"
+  alarm_actions     = [aws_autoscaling_policy.downCPU15.arn]
 }

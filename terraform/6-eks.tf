@@ -1,7 +1,7 @@
 # Resource: aws_iam_role
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role
-resource "aws_iam_role" "demo" {
-  name = "eks-cluster-demo"
+resource "aws_iam_role" "runners" {
+  name = "eks-cluster-runners"
 
   assume_role_policy = <<POLICY
 {
@@ -23,14 +23,14 @@ POLICY
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "demo-AmazonEKSClusterPolicy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-  role       = aws_iam_role.demo.name
+  role       = aws_iam_role.runners.name
 }
 
 # Resource: aws_eks_cluster
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster
-resource "aws_eks_cluster" "demo" {
+resource "aws_eks_cluster" "runners" {
   name     = "Runners"
-  role_arn = aws_iam_role.demo.arn
+  role_arn = aws_iam_role.runners.arn
 
   vpc_config {
     subnet_ids = [

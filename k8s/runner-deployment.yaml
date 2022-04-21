@@ -8,4 +8,39 @@ spec:
   template:
     spec:
       repository: jamcarbon/test-rust
-      env: []
+      env:
+      - name: runnerpods
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      dockerVolumeMounts:
+      - mountPath: /var/lib/docker
+        name: docker
+        subPathExpr: $(runnerpods)-docker
+      - mountPath: /runner/_work
+        name: work
+        subPathExpr: $(runnerpods)-work
+      volumeMounts:
+      - mountPath: /runner/_work
+        name: work
+        subPathExpr: $(runnerpods)-work
+      - mountPath: /tmp
+        name: tmp
+        subPathExpr: $(runnerpods)-tmp
+      dockerEnv:
+      - name: runnerpods
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      volumes:
+      - hostPath:
+          path: /dev/xvda
+        name: docker
+      - hostPath:
+          path: /dev/xvda
+        name: work
+      - hostPath:
+          path: /dev/xvda
+        name: tmp
+    emphemeral: true # VERY important. otherwise data inside the workdir and /tmp is not cleared between builds
+    

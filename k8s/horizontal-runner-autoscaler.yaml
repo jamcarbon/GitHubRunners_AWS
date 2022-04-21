@@ -8,7 +8,7 @@ spec:
   scaleTargetRef:
     name: k8s-runners
   scaleDownDelaySecondsAfterScaleOut: 3600
-  minReplicas: 1      # Minimum of 1 replica is required to kickstart the load when required
+  minReplicas: 0     
   maxReplicas: 100
   metrics:
   - type: PercentageRunnersBusy

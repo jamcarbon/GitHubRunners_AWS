@@ -30,9 +30,9 @@ resource "aws_iam_role_policy_attachment" "nodes-AmazonEC2ContainerRegistryReadO
 
 # Resource: aws_eks_node_group
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group
-resource "aws_eks_node_group" "node.runners" {
-  cluster_name    = aws_eks_cluster.runners
-  node_group_name = "node.runners"
+resource "aws_eks_node_group" "noderunners" {
+  cluster_name    = aws_eks_cluster.runners.name
+  node_group_name = "noderunners"
   node_role_arn   = aws_iam_role.nodes.arn
 
   subnet_ids = [
@@ -43,10 +43,10 @@ resource "aws_eks_node_group" "node.runners" {
   ami_type = "AL2_ARM_64"
 
   capacity_type  = "ON_DEMAND"
-  instance_types = ["t4g.medium"]
+  instance_types = ["c6gd.large"]
 
   scaling_config {
-    desired_size = 1
+    desired_size = 2
     max_size     = 4
     min_size     = 1
   }
