@@ -24,7 +24,7 @@ resource "aws_cloudwatch_metric_alarm" "CPUauto95" {
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
-  period              = "120"
+  period              = "240"
   statistic           = "Average"
   threshold           = "95"
 
