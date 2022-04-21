@@ -1,43 +1,27 @@
-resource "aws_launch_template" "ltm" {
-  name_prefix   = "ltm"
-  image_id      = "ami-036d82cfd2046804f"
-  instance_type = "t4g.medium"
-}
-
-resource "aws_autoscaling_group" "autoscalegroup" {
-  name                 = "autoscalegroup"
-  min_size             = 1
-  max_size             = 4
-  health_check_grace_period = 300
-  health_check_type         = "EC2"
-  desired_capacity     = 1
-  default_cooldown     = 120
-  vpc_zone_identifier  = [aws_subnet.private-us-east-1a.id, aws_subnet.private-us-east-1b.id]
-
-launch_template {
-    id      = aws_launch_template.ltm.id
-    version = "$Latest"
-  }
-
-  tag {
-    key                 = "Name"
-    value               = "AutoscaleGroup"
-    propagate_at_launch = true
-  }
-}
-
-resource "aws_autoscaling_policy" "asp" {
-  name                   = "autoscalepolicy"
-  scaling_adjustment     = 2
+# Resource: aws_autoscaling_policy
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy
+resource "aws_autoscaling_policy" "upCPU95" {
+  name                   = "UpscaleCPU95"
+  scaling_adjustment     = 1
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = 300
-  autoscaling_group_name = aws_autoscaling_group.autoscalegroup.name
+  cooldown               = 240
+  autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
 }
 
+resource "aws_autoscaling_policy" "downCPU15" {
+  name                   = "DownscaleCPU15"
+  scaling_adjustment     = -2
+  adjustment_type        = "ChangeInCapacity"
+  cooldown               = 3000
+  autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
+}
+
+# Resource: aws_cloudwatch_metric_alarm
+# https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm
 resource "aws_cloudwatch_metric_alarm" "CPUauto95" {
   alarm_name          = "CPUautoscale95"
   comparison_operator = "GreaterThanOrEqualToThreshold"
-  evaluation_periods  = "2"
+  evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
   namespace           = "AWS/EC2"
   period              = "120"
@@ -45,9 +29,28 @@ resource "aws_cloudwatch_metric_alarm" "CPUauto95" {
   threshold           = "95"
 
   dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.autoscalegroup.name
+    AutoScalingGroupName = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
   }
 
   alarm_description = "Autoscale when more than 95% CPU"
-  alarm_actions     = [aws_autoscaling_policy.asp.arn]
+  alarm_actions     = [aws_autoscaling_policy.upCPU95.arn]
 }
+
+resource "aws_cloudwatch_metric_alarm" "CPUauto15" {
+  alarm_name          = "CPUautoscale15"
+  comparison_operator = "LessThanThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/EC2"
+  period              = "1800"
+  statistic           = "Average"
+  threshold           = "15"
+
+  dimensions = {
+    AutoScalingGroupName = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
+  }
+
+  alarm_description = "Autoscale when more than 95% CPU"
+  alarm_actions     = [aws_autoscaling_policy.downCPU15.arn]
+}
+
