@@ -53,4 +53,3 @@ resource "aws_cloudwatch_metric_alarm" "CPUauto15" {
   alarm_description = "Autoscale when more than 95% CPU"
   alarm_actions     = [aws_autoscaling_policy.downCPU15.arn]
 }
-
