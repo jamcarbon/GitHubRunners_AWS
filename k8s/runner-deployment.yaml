@@ -8,5 +8,4 @@ spec:
   template:
     spec:
       repository: jamcarbon/test-rust
-      env:
-        []
+      env: []
