@@ -74,7 +74,7 @@ Install cert-manager
     cert-manager jetstack/cert-manager \
     --namespace cert-manager \
     --create-namespace \
-    --version v1.8.0 \
+    --version v1.6.0 \
     --set prometheus.enabled=false \
     --set installCRDs=true
 
@@ -108,7 +108,7 @@ Go to your GitHub account and create an app, please follow the instructions on t
     helm install runner \
         actions-runner-controller/actions-runner-controller \
         --namespace actions \
-        --version 0.17.3 \
+        --version 0.14.0 \
         --set syncPeriod=1m
 
 Let's check if the controller is up
@@ -116,10 +116,6 @@ Let's check if the controller is up
     kubectl get pods -n actions
 
 # Deploy runners
-
-Validate .yaml
-
-    kubeval k8s/runner-deployment.yaml
 
 Apply the deployment    
 
