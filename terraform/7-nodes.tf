@@ -46,7 +46,7 @@ resource "aws_eks_node_group" "noderunners" {
   instance_types = ["t4g.medium"]
 
   scaling_config {
-    desired_size = 0
+    desired_size = 3
     max_size     = 9
     min_size     = 0
   }
