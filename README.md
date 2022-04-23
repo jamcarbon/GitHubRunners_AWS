@@ -129,7 +129,7 @@ Check the generated pods
 
     kubectl get pods -n actions
 
-# Commit changes on the repository that the runners are configured to run, to test the runners, and go to actions tab on the repo
+# Wait 5 minutes and commit changes on the repository that the runners are configured to run, to test the runners, and go to actions tab on the repo
 
 Check the logs of the desired instances
 

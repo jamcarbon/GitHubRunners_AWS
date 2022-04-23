@@ -7,7 +7,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: k8s-runners
-  scaleDownDelaySecondsAfterScaleOut: 1800
+  scaleDownDelaySecondsAfterScaleOut: 120
   minReplicas: 0     
   maxReplicas: 100
   metrics:
