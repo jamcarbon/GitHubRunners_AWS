@@ -11,11 +11,6 @@ spec:
   minReplicas: 0     
   maxReplicas: 100
   metrics:
-  - type: PercentageRunnersBusy
-    scaleUpThreshold: '0.95'    # The percentage of busy runners at which the number of desired runners are re-evaluated to scale up
-    scaleDownThreshold: '0.15'   # The percentage of busy runners at which the number of desired runners are re-evaluated to scale down
-    scaleUpAdjustment: 1       # The scale up runner count added to desired count
-    scaleDownAdjustment: 3       # The scale down runner count subtracted from the desired count
   - type: TotalNumberOfQueuedAndInProgressWorkflowRuns # Autoscale using queued workflow runs
     repositoryNames:
     - jamcarbon/test-rust
