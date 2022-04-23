@@ -109,7 +109,7 @@ Go to your GitHub account and create an app, please follow the instructions on t
         actions-runner-controller/actions-runner-controller \
         --namespace actions \
         --version 0.14.0 \
-        --set syncPeriod=1m
+        --set syncPeriod=2m
 
 Let's check if the controller is up
 
@@ -129,13 +129,15 @@ Check the generated pods
 
     kubectl get pods -n actions
 
-# Commit changes on the repository that the runners are configured to run
+# Commit changes on the repository that the runners are configured to run, to test the runners, and go to actions tab on the repo
 
 Check the logs of the desired instances
 
-    kubectl logs -f k8s-runners -c runner -n actions runner
+    kubectl logs -f k8s-runners-ncndz-77qr4 -n actions runner
 
-    kubectl logs -f runner-actions-runner-controller-5997c655ff-6gngh -n actions manager
+    kubectl logs -f runner-actions-runner-controller-7db574bbf-4v9w6 -n actions manager
+
+
 
     # kubectl delete all --all
 
