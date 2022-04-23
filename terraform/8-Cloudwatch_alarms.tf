@@ -2,7 +2,7 @@
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/autoscaling_policy
 resource "aws_autoscaling_policy" "upCPU95" {
   name                   = "UpscaleCPU95"
-  scaling_adjustment     = 1
+  scaling_adjustment     = 3
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 240
   autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
@@ -10,7 +10,7 @@ resource "aws_autoscaling_policy" "upCPU95" {
 
 resource "aws_autoscaling_policy" "downCPU15" {
   name                   = "DownscaleCPU15"
-  scaling_adjustment     = -2
+  scaling_adjustment     = -3
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 3000
   autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
@@ -50,6 +50,6 @@ resource "aws_cloudwatch_metric_alarm" "CPUauto15" {
     AutoScalingGroupName = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
   }
 
-  alarm_description = "Autoscale when more than 95% CPU"
+  alarm_description = "Downscale when less than 15% CPU"
   alarm_actions     = [aws_autoscaling_policy.downCPU15.arn]
 }
