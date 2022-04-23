@@ -5,7 +5,7 @@ resource "aws_autoscaling_policy" "downCPU5" {
   name                   = "DownscaleCPU5"
   scaling_adjustment     = -3
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = 3600
+  cooldown               = 900
   autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
 }
 
