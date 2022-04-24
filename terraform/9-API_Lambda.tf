@@ -9,7 +9,7 @@ resource "aws_iam_role" "LambdaAutoScalingRole" {
       Action = "sts:AssumeRole"
       Effect = "Allow"
       Principal = {
-        Service = "lambda.amazonaws.com"
+        Service = "ec2.amazonaws.com"
       }
     }]
     Version = "2012-10-17"
