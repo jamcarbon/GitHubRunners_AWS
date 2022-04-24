@@ -4,27 +4,26 @@ resource "random_pet" "lambda_bucket_name" {
   length = 4
 }
 
-resource "aws_s3_bucket" "lambda_bucket" {
+data "aws_s3_bucket" "lambda_bucket" {
   bucket = random_pet.lambda_bucket_name.id
-
-  acl           = "private"
-  force_destroy = true
 }
-
-# Input variable definitions
+resource "aws_s3_bucket_acl" "lambda_bucket_acl" {
+  bucket = aws_s3_bucket.lambda_bucket.id
+  acl    = "private"
+}
 
 data "archive_file" "lambda_script" {
   type = "zip"
 
-  source_dir  = "${path.module}/GitHubRunners_AWS"
+  source_dir  = "${path.module}/GitHubRunners_AWS/script"
   output_path = "${path.module}/lambdascript.zip"
 }
 
 resource "aws_s3_object" "lambdascript" {
-  bucket = aws_s3_bucket.lambdascript.id
+  bucket = data.aws_s3_bucket.lambda_bucket.id
 
   key    = "lambdascript.zip"
-  source = data.archive_file.lambdascript.output_path
+  source = data.archive_file.lambda_script.output_path
 
   etag = filemd5(data.archive_file.lambdascript.output_path)
 }
@@ -88,24 +87,6 @@ resource "aws_apigatewayv2_stage" "Runner_lambda_api" {
 
   name        = "Runner_lambda_api_stage"
   auto_deploy = true
-
-  access_log_settings {
-    destination_arn = aws_cloudwatch_log_group.api_gw.arn
-
-    format = jsonencode({
-      requestId               = "$context.requestId"
-      sourceIp                = "$context.identity.sourceIp"
-      requestTime             = "$context.requestTime"
-      protocol                = "$context.protocol"
-      httpMethod              = "$context.httpMethod"
-      resourcePath            = "$context.resourcePath"
-      routeKey                = "$context.routeKey"
-      status                  = "$context.status"
-      responseLength          = "$context.responseLength"
-      integrationErrorMessage = "$context.integrationErrorMessage"
-      }
-    )
-  }
 }
 
 resource "aws_apigatewayv2_integration" "LambdaAutoscaling" {
