@@ -46,8 +46,8 @@ resource "aws_eks_node_group" "noderunners" {
   instance_types = ["t4g.medium"]
 
   scaling_config {
-    desired_size = 3
-    max_size     = 9
+    desired_size = 0
+    max_size     = 9      #Currently set to 9, it means 3 push events at the same time, if you want to increase the concurrent push event to handle, increase this number by 3 per push event.
     min_size     = 0
   }
 
