@@ -1,8 +1,5 @@
 # Resource
-resource "aws_iam_role" "LambdaAutoScalingRole" {
-  name = "LambdaAutoScalingRole"
-  assume_role_policy  = aws_iam_policy.LambdaAutoscaling.arn
-}
+
 
 resource "aws_iam_policy" "policy_one" {
   name = "LambdaAutoscaling"
@@ -24,6 +21,12 @@ resource "aws_iam_policy" "policy_one" {
     ]
   })
 }
+
+resource "aws_iam_role" "LambdaAutoScalingRole" {
+  name = "LambdaAutoScalingRole"
+  assume_role_policy  = aws_iam_policy.LambdaAutoscaling.arn
+}
+
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
   role       = aws_iam_role.LambdaAutoScalingRole.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
