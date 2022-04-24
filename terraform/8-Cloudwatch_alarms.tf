@@ -28,7 +28,7 @@ resource "aws_cloudwatch_metric_alarm" "CPUauto5" {
 }
 
 resource "aws_autoscaling_policy" "downCPU60" {
-  name                   = "DownscaleCPU5"
+  name                   = "DownscaleCPU60"
   scaling_adjustment     = -3       # reduce the capacity by 3 after the CPU usage is less than 60% for more than 15 minutes
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 1800     # use this policy again after 30 minutes
