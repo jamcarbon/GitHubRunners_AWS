@@ -1,4 +1,4 @@
-# Auto Scale Github Action Runners using Kubernetes, Terraform in AWS.
+# Auto-Scaling Github Action self-hosted Runners in AWS using Kubernetes and Terraform.
 
 This controller operates self-husted runners for GitHub ACtions on your Kubernetes cluster.
 Its going to upscale and downscale EC2 instances and pods depending on the pending jobs from GitHub actions, and push events.
