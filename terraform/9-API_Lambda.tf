@@ -1,27 +1,29 @@
 # Resource
 resource "aws_iam_role" "LambdaAutoScalingRole" {
   name = "LambdaAutoScalingRole"
+  assume_role_policy  = aws_iam_policy.LambdaAutoscaling.arn
+}
 
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": ["autoscaling:SetDesiredCapacity",
+resource "aws_iam_policy" "policy_one" {
+  name = "LambdaAutoscaling"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["autoscaling:SetDesiredCapacity",
                 "autoscaling:PutScalingPolicy",
                 "autoscaling:UpdateAutoScalingGroup",
                 "autoscaling:DescribeAutoScalingGroups"]
-      "Principal": {
+        "Principal": {
         "Service": "lambda.amazonaws.com"
       },
       "Effect": "Allow",
       "Sid": ""
-    }
-  ]
+      },
+    ]
+  })
 }
-EOF
-}
-
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
   role       = aws_iam_role.LambdaAutoScalingRole.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
