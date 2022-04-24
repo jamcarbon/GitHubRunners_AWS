@@ -51,7 +51,7 @@ resource "aws_apigatewayv2_api" "Runner_lambda_api" {
 resource "aws_apigatewayv2_stage" "Runner_lambda_api" {
   api_id = aws_apigatewayv2_api.Runner_lambda_api.id
 
-  name        = "Runner_lambda_api_stage"
+  name        = "LambdaAutoscaling"
   auto_deploy = true
 }
 
@@ -66,7 +66,7 @@ resource "aws_apigatewayv2_integration" "LambdaAutoscaling" {
 resource "aws_apigatewayv2_route" "LambdaAutoscaling" {
   api_id = aws_apigatewayv2_api.Runner_lambda_api.id
 
-  route_key = "GET /hello"
+  route_key = "ANY /LambdaAutoscaling"
   target    = "integrations/${aws_apigatewayv2_integration.LambdaAutoscaling.id}"
 }
 

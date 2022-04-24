@@ -10,10 +10,8 @@ def getapiendpoint():
         apisfulldetails = apis['Items']
         apiendpoint = apisfulldetails[0]
         myapiendpoint = apiendpoint['ApiEndpoint']
-        print("\n", myapiendpoint, "\n")
+        print(myapiendpoint + "/Runner_lambda_api_stage")
     except:
         print("An error has ocurred, try again.")
 
 getapiendpoint()
-
-
