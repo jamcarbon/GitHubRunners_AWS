@@ -2,7 +2,7 @@
 
 
 resource "aws_iam_policy" "LambdaAutoscaling" {
-  name        = "LambdaAutoscaling"
+  name = "LambdaAutoscaling"
 
   policy = jsonencode({
     Version = "2012-10-17"
