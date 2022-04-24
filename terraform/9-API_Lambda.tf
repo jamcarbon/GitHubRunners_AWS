@@ -1,7 +1,7 @@
 # Resource
 
 
-resource "aws_iam_policy" "policy_one" {
+resource "aws_iam_policy" "LambdaAutoscaling" {
   name = "LambdaAutoscaling"
 
   policy = jsonencode({
