@@ -23,7 +23,7 @@ resource "aws_iam_policy" "LambdaAutoscaling" {
 
 resource "aws_iam_role" "LambdaAutoScalingRole" {
   name = "LambdaAutoScalingRole"
-  assume_role_policy  = aws_iam_policy.LambdaAutoscaling.json
+  assume_role_policy  = aws_iam_policy.LambdaAutoscaling.arn
 }
 
 
