@@ -2,7 +2,7 @@
 resource "aws_iam_role" "LambdaAutoScalingRole" {
   name = "LambdaAutoScalingRole"
 
-  assume_role_policy = <<EOF
+  policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
