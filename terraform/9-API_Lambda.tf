@@ -3,7 +3,7 @@
 
 resource "aws_iam_policy" "LambdaAutoscaling" {
   name = "LambdaAutoscaling"
-
+  arn = "arn:aws:iam::123456789012:policy/UsersManageOwnCredentials"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
