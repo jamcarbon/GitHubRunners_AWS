@@ -1,32 +1,20 @@
 # Resource
 
 
-resource "aws_iam_policy" "LambdaAutoscaling" {
-  name = "LambdaAutoscaling"
-  
-  policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Action = [
-			"autoscaling:SetDesiredCapacity",
-			"autoscaling:PutScalingPolicy",
-			"autoscaling:UpdateAutoScalingGroup",
-			"autoscaling:DescribeAutoScalingGroups"
-		]
-        Effect = "Allow"
-        Resource = "lambda.amazonaws.com"
-      },
-    ]
-  })
-}
-
 resource "aws_iam_role" "LambdaAutoScalingRole" {
   name = "LambdaAutoScalingRole"
-  assume_role_policy  = "arn:aws:logs:us-east-1:333988654930:log-group:/aws/lambda/AutoscalingFunction:*"
+
+  assume_role_policy = jsonencode({
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      }
+    }]
+    Version = "2012-10-17"
+  })
 }
-
-
 
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
   role       = aws_iam_role.LambdaAutoScalingRole.name
