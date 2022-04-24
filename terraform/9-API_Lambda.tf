@@ -7,11 +7,10 @@ resource "aws_iam_role" "LambdaAutoScalingRole" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Action": "ec2.Describe*", 
-                "autoscaling:SetDesiredCapacity",
+      "Action": ["autoscaling:SetDesiredCapacity",
                 "autoscaling:PutScalingPolicy",
                 "autoscaling:UpdateAutoScalingGroup",
-                "autoscaling:DescribeAutoScalingGroups"
+                "autoscaling:DescribeAutoScalingGroups"]
       "Principal": {
         "Service": "lambda.amazonaws.com"
       },
