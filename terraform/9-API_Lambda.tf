@@ -26,8 +26,8 @@ resource "aws_iam_role_policy_attachment" "lambda_policy" {
 
 data "archive_file" "lambda_zip" {                                                                                                                                                                                   
   type        = "zip"                                                                                                                                                                                                
-  source_file  = "lambdascript.py"                                                                                                                                                                                         
-  output_path = "lambda_package.zip"                                                                                                                                                                         
+  source_file  = "script/lambdascript.py"                                                                                                                                                                                         
+  output_path = "script/lambda_package.zip"                                                                                                                                                                         
 }   
 resource "aws_lambda_function" "LambdaAutoscaling" {
   description = "LambdaAutoscaling"
