@@ -10,9 +10,9 @@ def getapiendpoint():
         apisfulldetails = apis['Items']
         apiendpoint = apisfulldetails[0]
         myapiendpoint = apiendpoint['ApiEndpoint']
-        return(myapiendpoint)
+        print("\n", myapiendpoint, "\n")
     except:
-        return("An error has ocurred, try again.")
+        print("An error has ocurred, try again.")
 
 getapiendpoint()
 

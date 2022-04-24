@@ -63,6 +63,13 @@ Deploy all the infrasctructure
 
     terraform apply -destroy
 
+# Get the API Endpoint and attach it to GitHub Webhook
+
+Run getAPI.py to get the API endpoint URL and then, go to your actions repo, settings, Webhook, Add webhook, paste the URL that you will get after running the below command, and "Add webhook".
+
+    python3 getAPI.py
+
+
 
 # Register Kubernetets to use AWS infrastructure    
 

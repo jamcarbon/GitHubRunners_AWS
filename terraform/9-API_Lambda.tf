@@ -7,7 +7,7 @@ resource "aws_iam_role" "LambdaAutoScalingRole" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Action": "sts:AssumeRole",
+      "Action": "ec2.*",
       "Principal": {
         "Service": "lambda.amazonaws.com"
       },
