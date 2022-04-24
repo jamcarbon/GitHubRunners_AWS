@@ -174,4 +174,4 @@ Install dependencies first
     sudo apt-get install python3.9
     pip3 install boto3
 
-    python get_ec2.py
+    python3 get_ec2.py
