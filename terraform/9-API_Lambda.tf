@@ -14,11 +14,8 @@ resource "aws_iam_policy" "LambdaAutoscaling" {
 			"autoscaling:UpdateAutoScalingGroup",
 			"autoscaling:DescribeAutoScalingGroups"
 		]
-        "Principal": {
-        "Service": "lambda.amazonaws.com"
-		},
-		"Effect": "Allow",
-		"Sid": ""
+        Effect = "Allow"
+        Resource = "lambda.amazonaws.com"
       },
     ]
   })
