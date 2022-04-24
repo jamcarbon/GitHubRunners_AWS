@@ -6,13 +6,11 @@ resource "aws_iam_role" "LambdaAutoScalingRole" {
 
   assume_role_policy = jsonencode({
     Statement = [{
-      Action = [
-                "autoscaling:SetDesiredCapacity",
-                "autoscaling:PutScalingPolicy",
-                "autoscaling:UpdateAutoScalingGroup"
-            ]
+      Action = "sts:AssumeRole"
       Effect = "Allow"
-      Resource = "*"
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      }
     }]
     Version = "2012-10-17"
   })
