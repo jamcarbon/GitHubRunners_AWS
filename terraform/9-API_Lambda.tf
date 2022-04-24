@@ -2,27 +2,26 @@
 
 
 resource "aws_iam_policy" "LambdaAutoscaling" {
-  name = "LambdaAutoscaling"
+  name        = "LambdaAutoscaling"
 
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": ["autoscaling:SetDesiredCapacity",
-                "autoscaling:PutScalingPolicy",
-                "autoscaling:UpdateAutoScalingGroup",
-                "autoscaling:DescribeAutoScalingGroups"]
-      
-      "Principal": {
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+			"autoscaling:SetDesiredCapacity",
+			"autoscaling:PutScalingPolicy",
+			"autoscaling:UpdateAutoScalingGroup",
+			"autoscaling:DescribeAutoScalingGroups"
+		]
+        "Principal": {
         "Service": "lambda.amazonaws.com"
+		},
+		"Effect": "Allow",
+		"Sid": ""
       },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
+    ]
+  })
 }
 
 resource "aws_iam_role" "LambdaAutoScalingRole" {
