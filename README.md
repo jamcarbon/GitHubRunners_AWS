@@ -1,6 +1,24 @@
-# Auto Scale Github Action Runners using Kubernetes, Terraform, and docker
+# Auto Scale Github Action Runners using Kubernetes, Terraform in AWS.
 
-Create the infrastructure, we are going to create 2 VPC, ,internet gate way, 4 subnets, nat, routes, eks cluster with IAM roles and a managed instance group using Terraform.
+This controller operates self-husted runners for GitHub ACtions on your Kubernetes cluster.
+Its going to upscale and downscale EC2 instances and pods depending on the pending jobs from GitHub actions, and push events.
+For this test I use this repo for running the actions https://github.com/jamcarbon/test-rust, for each push event, 6 jobs will be generated.
+When a push event is registered, API Gateway will activate a Lambda function which will increase the Elastic Kubernets Service desired capacity into 3, and 6 pods will be created. (1 for each job).
+Cloudwatch will monitor the CPU usage and when it has been less than 5% usage for 10, it will decrease the desired capacity by 3, making the deployment to $0, to avoid paying when we don't need instances running.
+If a 2nd push is send while the first push actions haven't finished, 3 more EC2 instances will be created, and after the first push actions will finish, a second cloudwatch rule will decreased the instances by 3 when the CPU usage is less than 60% among all the cluster.
+
+Resources to be used:
+AWS
+Terraform
+AWS API Gateway
+AWS Lambda
+AWS Elastic Kubernetes Service
+AWS EC2
+AWS Cloudwatch
+Repositories used:
+https://github.com/actions-runner-controller/actions-runner-controller
+
+First, we need to create the infrastructure, we are going to terraform to deply all the infrastructure including the IAM roles.
 
 Configure AWS (on your local pc)
 
@@ -9,21 +27,23 @@ Configure AWS (on your local pc)
     aws configure
 
 Clone the repository 
+
     sudo apt install git
     
     git clone https://github.com/jamcarbon/GitHubRunners_AWS
-    # git pull https://github.com/jamcarbon/GitHubRunners_AWS main
 
     cd GitHubRunners_AWS
 
     curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
     sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 
+Install terraform 
+
     sudo apt-get update && sudo apt-get install terraform
 
     cd terraform
 
-Validate the templates    
+Start Terraform
 
     terraform init
 
@@ -35,11 +55,11 @@ You can check the terraform plan by running
 
     terraform plan
 
-To apply all the infrastructure run    
+Deploy all the infrasctructure
 
     terraform apply
 
-To destroy all the infrastucture created    
+(To destroy all the infrastucture created)
 
     terraform apply -destroy
 
@@ -51,6 +71,8 @@ To destroy all the infrastucture created
 Test connection
 
     kubectl get svc
+
+# Install cert-manager
 
 Install cert-manager
 
@@ -65,10 +87,6 @@ Install cert-manager
 Watch current pods
 
     watch kubectl get pods -A
-
-Open a new command prompt    
-
-Install cert-manager
 
     helm install \
     cert-manager jetstack/cert-manager \
@@ -88,8 +106,7 @@ Create namespace actions
     kubectl create ns actions
 
 Go to your GitHub account and create an app, please follow the instructions on the wesite below to create an GitHub app and modify the values on the snip after this:
-
-    https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app
+https://github.com/actions-runner-controller/actions-runner-controller#deploying-using-github-app-authentication
 
     kubectl create secret generic controller-manager \
         -n actions \
@@ -108,7 +125,7 @@ Go to your GitHub account and create an app, please follow the instructions on t
     helm install runner \
         actions-runner-controller/actions-runner-controller \
         --namespace actions \
-        --version 0.14.0 \
+        --version 0.14.0 \     #change the version if required
         --set syncPeriod=2m
 
 Let's check if the controller is up
@@ -133,47 +150,21 @@ Check the generated pods
 
 Check the logs of the desired instances
 
-    kubectl logs -f k8s-runners-ncndz-77qr4 -n actions runner
+    kubectl logs -f [k8s-runners-name] -n actions runner
 
-    kubectl logs -f runner-actions-runner-controller-7db574bbf-4v9w6 -n actions manager
-
-
-
-    # kubectl delete all --all
+    kubectl logs -f [runner-actions-runner-controller-name] -n actions manager
 
 
-    # kubectl -n kube-system logs -f deployment.apps/cluster-autoscaler
-    
+# Get the current running intances with python
 
+Run the python file to check for how many instances are running, their type, ID and the aproximate cost per hour.
 
+Install dependencies first
 
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt-get update
+    apt list | grep python3.9
+    sudo apt-get install python3.9
+    pip3 install boto3
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.6.1/cert-manager.yaml
-
-    kubectl get pods --namespace cert-manager
-
-    REPLACE "v0.22.0" with the version you wish to deploy
-
-    kubectl apply -f https://github.com/actions-runner-controller/actions-runner-controller/releases/download/v0.22.3/actions-runner-controller.yaml
-
-    
-
-    kubectl create secret generic controller-manager \
-        -n actions-runner-system \
-        --from-literal=github_token=${GITHUB_TOKEN}
-
-
-kubectl exec --stdin --tty k8s-runners-lz6p5-6kqdj -- /bin/bash
+    python get_ec2.py
