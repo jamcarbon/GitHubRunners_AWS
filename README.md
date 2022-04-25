@@ -67,10 +67,37 @@ Deploy all the infrasctructure
 
 Run getAPI.py to get the API endpoint URL and then, go to your actions repo, settings, Webhook, Add webhook, paste the URL that you will get after running the below command, and "Add webhook".
 
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt-get update
+    apt list | grep python3.9
+    sudo apt-get install python3.9
+    pip3 install boto3
+
     python3 getAPI.py
 
+# Go to IAM console and create a policy and a role for Lambda, use the folowing policy. And attach the role to lambda
 
-
+    {
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "LambdaAutoscaling",
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:SetDesiredCapacity",
+                "autoscaling:PutScalingPolicy",
+                "autoscaling:UpdateAutoScalingGroup"
+            ],
+            "Resource": "arn:aws:autoscaling:*:<you_account_id>:autoScalingGroup:*:autoScalingGroupName/*"
+        },
+        {
+            "Sid": "LambdaAutoscaling1",
+            "Effect": "Allow",
+            "Action": "autoscaling:DescribeAutoScalingGroups",
+            "Resource": "*"
+        }
+    ]
+    }
 # Register Kubernetets to use AWS infrastructure    
 
     aws eks --region us-east-1 update-kubeconfig --name Runners
@@ -129,12 +156,15 @@ https://github.com/actions-runner-controller/actions-runner-controller#deploying
 
     helm search repo actions
 
+    #change the version if required
+
     helm install runner \
         actions-runner-controller/actions-runner-controller \
         --namespace actions \
-        --version 0.14.0 \     #change the version if required
+        --version 0.14.0 \     
         --set syncPeriod=2m
 
+    
 Let's check if the controller is up
 
     kubectl get pods -n actions
@@ -152,6 +182,8 @@ Apply the horizontal autoscaler
 Check the generated pods 
 
     kubectl get pods -n actions
+    
+    watch kubectl get pods -A
 
 # Wait 5 minutes and commit changes on the repository that the runners are configured to run, to test the runners, and go to actions tab on the repo
 
@@ -165,13 +197,5 @@ Check the logs of the desired instances
 # Get the current running intances with python
 
 Run the python file to check for how many instances are running, their type, ID and the aproximate cost per hour.
-
-Install dependencies first
-
-    sudo add-apt-repository ppa:deadsnakes/ppa
-    sudo apt-get update
-    apt list | grep python3.9
-    sudo apt-get install python3.9
-    pip3 install boto3
 
     python3 get_ec2.py
