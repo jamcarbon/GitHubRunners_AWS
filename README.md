@@ -7,7 +7,7 @@ When a push event is registered, API Gateway will activate a Lambda function whi
 Cloudwatch will monitor the CPU usage and when it has been less than 5% usage for 10, it will decrease the desired capacity by 3, making the deployment to $0, to avoid paying when we don't need instances running.
 If a 2nd push is send while the first push actions haven't finished, 3 more EC2 instances will be created, and after the first push actions will finish, a second cloudwatch rule will decreased the instances by 3 when the CPU usage is less than 60% among all the cluster.
 
-![Diagram](https://github.com/jamcarbon/GitHubRunners_AWS/blob/main/GitHubRunnersAWS_Diagram.jpg)
+![Diagram](https://github.com/jamcarbon/GitHubRunners_AWS/blob/main/GitHubRunners_Diagram.jpg)
 
 Resources to be used:
 AWS
