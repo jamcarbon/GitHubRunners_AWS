@@ -3,7 +3,7 @@
 
 resource "aws_autoscaling_policy" "downCPU5" {
   name                   = "DownscaleCPU5"
-  scaling_adjustment     = -3     # reduce the capacity by 3 after the CPU usage is less than 5% for more than 10 minutes
+  scaling_adjustment     = -6     # reduce the capacity by 3 after the CPU usage is less than 5% for more than 10 minutes
   adjustment_type        = "ChangeInCapacity"
   cooldown               = 900   # use this policy again after 15 minutes
   autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
