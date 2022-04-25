@@ -31,7 +31,7 @@ resource "aws_autoscaling_policy" "downCPU60" {
   name                   = "DownscaleCPU60"
   scaling_adjustment     = -3       # reduce the capacity by 3 after the CPU usage is less than 60% for more than 15 minutes
   adjustment_type        = "ChangeInCapacity"
-  cooldown               = 1800     # use this policy again after 30 minutes
+  cooldown               = 900    # use this policy again after 30 minutes
   autoscaling_group_name = aws_eks_node_group.noderunners.resources[0].autoscaling_groups[0].name
 }
 
