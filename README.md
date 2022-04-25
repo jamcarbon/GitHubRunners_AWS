@@ -65,19 +65,12 @@ Deploy all the infrasctructure
 
     terraform apply -destroy
 
-# Get the API Endpoint and attach it to GitHub Webhook
-
-Run getAPI.py to get the API endpoint URL and then, go to your actions repo, settings, Webhook, Add webhook, paste the URL that you will get after running the below command, and "Add webhook".
-
-    sudo add-apt-repository ppa:deadsnakes/ppa
-    sudo apt-get update
-    apt list | grep python3.9
-    sudo apt-get install python3.9
-    pip3 install boto3
-
-    python3 getAPI.py
-
 # Go to IAM console and create a policy and a role for Lambda, use the folowing policy. And attach the role to lambda
+
+There is a terraform file for creating the Lambda function and API "9-API_lambda.tf"
+If doesn't work in some version, if it doesn't work for you, follow the steps below:
+
+in IAM, Create a role, and a policy
 
     {
     "Version": "2012-10-17",
@@ -100,6 +93,36 @@ Run getAPI.py to get the API endpoint URL and then, go to your actions repo, set
         }
     ]
     }
+
+# Create an API Gateway and Lambda Function
+
+Create Lambda function, for that, go to the consolehttps://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions
+Click create function, put a name to the function, select python 3.9 as Runtime, for Execution role, select the role previously created, and click on create function.
+Then, go to code source and paste the content from the function file.
+The code for lambda function is lambdascript.py
+
+For the creating API Gateway, go to the console https://us-east-1.console.aws.amazon.com/apigateway/main/apis?region=us-east-1
+Create API, select HTTP API build, add lambda integration, select the lambda function just created, type the API name, and click next.
+Select POST method, and click next.
+Leave the default stage and click next.
+Click create.
+
+Go back to lambda and select the just create API as trigger.
+Trigger configuration, API gateway, Deployment stage $default, security Open and click add.
+
+After adding the trigger, you will see the API enpoint, or you can get it on the next step.
+
+# Get the API Endpoint and attach it to GitHub Webhook
+
+Run getAPI.py to get the API endpoint URL and then, go to your actions repo, settings, Webhook, Add webhook, paste the URL that you will get after running the below command, and "Add webhook".
+
+    sudo add-apt-repository ppa:deadsnakes/ppa
+    sudo apt-get update
+    apt list | grep python3.9
+    sudo apt-get install python3.9
+    pip3 install boto3
+
+    python3 getAPI.py
 # Register Kubernetets to use AWS infrastructure    
 
     aws eks --region us-east-1 update-kubeconfig --name Runners
