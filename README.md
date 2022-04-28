@@ -1,6 +1,6 @@
 # Auto-Scaling Github Action self-hosted Runners in AWS using Kubernetes and Terraform.
 
-This controller operates self-husted runners for GitHub ACtions on your Kubernetes cluster.
+This controller operates self-husted runners for GitHub Actions on your Kubernetes cluster.
 Its going to upscale and downscale EC2 instances and pods depending on the pending jobs from GitHub actions, and push events.
 For this test I use this repo for running the actions https://github.com/jamcarbon/test-rust, for each push event, 6 jobs will be generated.
 When a push event is registered, API Gateway will activate a Lambda function which will increase the Elastic Kubernets Service desired capacity into 3, and 6 pods will be created. (1 for each job).
@@ -186,7 +186,7 @@ https://github.com/actions-runner-controller/actions-runner-controller#deploying
     helm install runner \
         actions-runner-controller/actions-runner-controller \
         --namespace actions \
-        --version 0.14.0 \     
+        --version 0.14.0 \
         --set syncPeriod=2m
 
     
