@@ -189,7 +189,7 @@ https://github.com/actions-runner-controller/actions-runner-controller#deploying
         actions-runner-controller/actions-runner-controller \
         --namespace actions \
         --version 0.14.0 \
-        --set syncPeriod=2m
+        --set syncPeriod=3m
 
     
 Let's check if the controller is up
