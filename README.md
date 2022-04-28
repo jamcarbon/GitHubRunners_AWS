@@ -63,48 +63,17 @@ Deploy all the infrasctructure
 
     terraform apply
 
-(To destroy all the infrastucture created)
+#(If you want to destroy all the infrastucture created:)
 
     terraform apply -destroy
 
-# Go to IAM console and create a policy and a role for Lambda, use the folowing policy. And attach the role to lambda
+# Create an API Gateway 
 
-There is a terraform file for creating the Lambda function and API "9-API_lambda.tf"
-If doesn't work in some version, if it doesn't work for you, follow the steps below:
-
-in IAM, Create a role, and a policy
-
-    {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "LambdaAutoscaling",
-            "Effect": "Allow",
-            "Action": [
-                "autoscaling:SetDesiredCapacity",
-                "autoscaling:PutScalingPolicy",
-                "autoscaling:UpdateAutoScalingGroup"
-            ],
-            "Resource": "arn:aws:autoscaling:*:<you_account_id>:autoScalingGroup:*:autoScalingGroupName/*"
-        },
-        {
-            "Sid": "LambdaAutoscaling1",
-            "Effect": "Allow",
-            "Action": "autoscaling:DescribeAutoScalingGroups",
-            "Resource": "*"
-        }
-    ]
-    }
-
-# Create an API Gateway and Lambda Function
-
-Create Lambda function, for that, go to the consolehttps://us-east-1.console.aws.amazon.com/lambda/home?region=us-east-1#/functions
-Click create function, put a name to the function, select python 3.9 as Runtime, for Execution role, select the role previously created, and click on create function.
-Then, go to code source and paste the content from the function file.
-The code for lambda function is lambdascript.py
+There is a file called "10-API.tf.bak" inside terraform folder.
+If you remove the .bak, you can deploy the file along with the rest, however the API won't return back to GitHub, if you want to receive message on GitHub, when the API was sucesfully called, please create API Gatway manually.
 
 For the creating API Gateway, go to the console https://us-east-1.console.aws.amazon.com/apigateway/main/apis?region=us-east-1
-Create API, select HTTP API build, add lambda integration, select the lambda function just created, type the API name, and click next.
+Create API, select HTTP API build, add "lambda" integration, select the lambda function already created created "LambdaAutoscaling", type the API name, and click next.
 Select POST method, and click next.
 Leave the default stage and click next.
 Click create.
@@ -125,6 +94,11 @@ Run getAPI.py to get the API endpoint URL and then, go to your actions repo, set
     pip3 install boto3
 
     python3 getAPI.py
+
+When you attach the API URL to GitHub for the first time, GitHub will call the API to check if its working, in this case, it will call it and by so, it will create 3 EC2 intances.
+Please run the below code to Terminate those instances and also you can use this to terminate them at any time.
+
+    python3 terminateEC2.py
 # Register Kubernetets to use AWS infrastructure    
 
     aws eks --region us-east-1 update-kubeconfig --name Runners
